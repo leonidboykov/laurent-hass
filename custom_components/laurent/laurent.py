@@ -47,6 +47,7 @@ class Laurent:
                 # TODO: Add error handling.
                 return await resp.json(
                     content_type="text/html",
+                    encoding="utf-8",
                     loads=JSONDecoder(object_hook=LaurentData).decode,
                 )
 

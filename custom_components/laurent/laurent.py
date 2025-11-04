@@ -12,11 +12,13 @@ class LaurentData:
     states: list[bool] | None
 
     def __init__(self, input) -> None:
-        self.firmware = input.get("fw")
-        self.serial_number = input.get("sn")
-        self.mac = input.get("mac")
-        self.model = self._model_by_fw(input.get("fw"))
-        self.states = list(bool(int(x)) for x in input.get("rele"))
+        # object_hook is called recursively for JSONDecoder.
+        if 'fw' in input:
+            self.firmware = input.get("fw")
+            self.serial_number = input.get("sn")
+            self.mac = input.get("mac")
+            self.model = self._model_by_fw(input.get("fw"))
+            self.states = list(bool(int(x)) for x in input.get("rele"))
 
     def _model_by_fw(self, fw: str) -> str:
         if fw.startswith("LR"):
@@ -25,6 +27,10 @@ class LaurentData:
             return "Laurent-128"
         elif fw.startswith("L"):
             return "Laurent-2"
+        elif fw.startswith("L5"):
+            return "Laurent-5"
+        elif fw.startswith("G5"):
+            return "Laurent-5G"
         else:
             return "Unknown Model"
 
@@ -55,5 +61,4 @@ class Laurent:
         async with aiohttp.ClientSession(self.host) as session:
             async with session.get("/cmd.cgi", params=params) as resp:
                 ret = await resp.text()
-                print("---", ret, "---")
-                return True
+                return ret.startswith("#REL,OK")

@@ -9,7 +9,7 @@ class LaurentData:
     serial_number: str | None
     mac: str | None
     model: str | None
-    states: list[bool] | None
+    states: list[bool]
 
     def __init__(self, input) -> None:
         # object_hook is called recursively for JSONDecoder.
@@ -47,6 +47,7 @@ class Laurent:
                 # TODO: Add error handling.
                 return await resp.json(
                     content_type="text/html",
+                    encoding="utf-8",
                     loads=JSONDecoder(object_hook=LaurentData).decode,
                 )
 

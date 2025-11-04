@@ -9,11 +9,10 @@ This integration provides support for some of [KernelChip] devices.
 Install it as [Custom repository] within HACS and activate it from UI. You've to provide unique name for your device,
 host and password (passwordless access is not supported).
 
-Поддерживается настройка через UI (ConfigFlow), нужно указать хост и пароль от устройства.
-
 ## Roadmap
 
-I've made this integration for my only KernelChip's device ([Laurent-112]). According to documentation, this integration may also support [Laurent-128] but I haven't tested it. I don't have any plans supporting other devices.
+I've made this integration for my only KernelChip's device ([Laurent-112]). According to documentation, this integration
+may also support [Laurent-128] but I haven't tested it. I don't have any plans supporting other devices.
 
 You may send PR to provide support for other devices, or just fork it.
 

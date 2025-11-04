@@ -5,10 +5,10 @@ import voluptuous as vol
 from homeassistant.config_entries import (
     ConfigFlow,
     ConfigEntry,
-    OptionsFlow
+    OptionsFlow,
+    ConfigFlowResult,
 )
 from homeassistant.core import callback
-from homeassistant.data_entry_flow import FlowResult
 from homeassistant.const import (
     CONF_NAME,
     CONF_HOST,
@@ -31,11 +31,11 @@ class LaurentConfigFlow(ConfigFlow, domain=DOMAIN):
     @staticmethod
     @callback
     def async_get_options_flow(config_entry: ConfigEntry) -> OptionsFlow:
-        return LaurentOptionsFlowHandler(config_entry)
+        return LaurentOptionsFlowHandler()
 
     async def async_step_user(
         self, user_input: dict[str, Any] | None = None
-    ) -> FlowResult:
+    ) -> ConfigFlowResult:
         errors: dict[str, str] = {}
 
         if user_input is not None:
@@ -58,12 +58,9 @@ class LaurentConfigFlow(ConfigFlow, domain=DOMAIN):
 
 
 class LaurentOptionsFlowHandler(OptionsFlow):
-    def __init__(self, config_entry: ConfigFlow) -> None:
-        self.config_entry = config_entry
-
     async def async_step_init(
         self, user_input: dict[str, Any] | None = None
-    ) -> FlowResult:
+    ) -> ConfigFlowResult:
         errors: dict[str, str] = {}
 
         if user_input is not None:
